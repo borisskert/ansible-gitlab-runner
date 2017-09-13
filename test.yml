@@ -1,0 +1,20 @@
+---
+- hosts: test_machine
+  become: yes
+
+  pre_tasks:
+  - apt:
+      name: python-docker
+      update_cache: yes
+
+  post_tasks:
+  - apt:
+      name: python-docker
+      state: absent
+      purge: yes
+
+  roles:
+    - role: '.'
+      gitlab_uri: 'http://192.168.56.101'
+      registration_token: 'XXX'
+      config_volume: /srv/docker/gitlab-runner

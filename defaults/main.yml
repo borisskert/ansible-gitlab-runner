@@ -1,0 +1,10 @@
+image_name: gitlab/gitlab-runner
+image_version: alpine-v9.5.0
+
+config_volume: ''
+config_file_path: '{{config_volume}}/config.toml'
+
+gitlab_uri: ''
+
+force_registration: False
+registration_token: ''

@@ -1,0 +1,37 @@
+---
+- name: pull image
+  docker_image:
+    name: "{{image_name}}:{{image_version}}"
+
+- name: Gathering config file existence
+  stat: path={{config_file_path}}
+  register: config_file
+
+- include: register_runner.yml
+  when: (config_file.stat.exists == False or force_registration == True) and
+   not(
+     (gitlab_uri is undefined)
+     or
+     (gitlab_uri is none)
+     or
+     (gitlab_uri | trim == '')
+   ) and
+   not(
+     (registration_token is undefined)
+     or
+     (registration_token is none)
+     or
+     (registration_token | trim == '')
+   )
+
+- name: Create gitlab-runner systemd unit file
+  template: src=gitlab-runner.systemd.j2 dest=/etc/systemd/system/gitlab-runner.service owner=root group=root mode=0550
+  register: gitlab_runner_service
+
+- name: Reload systemd
+  command: systemctl daemon-reload
+  when: gitlab_runner_service.changed
+
+- name: Restart service
+  service: name=gitlab-runner state=restarted enabled=yes
+  when: gitlab_runner_service.changed or runner_register is defined and runner_register.changed

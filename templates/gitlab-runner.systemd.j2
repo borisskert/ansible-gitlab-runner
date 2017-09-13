@@ -1,0 +1,21 @@
+[Install]
+WantedBy = multi-user.target
+
+[Unit]
+Description = gitlab-runner service
+Type = simple
+Requires = gitlab.service
+
+[Service]
+ExecStartPre = -/usr/bin/docker rm -f %n &&
+ExecStart = /usr/bin/docker run --name %n \
+{% if config_volume != "" %}
+            --volume {{config_volume}}:/etc/gitlab-runner \
+{% endif %}
+            --volume /var/run/docker.sock:/var/run/docker.sock \
+            {{image_name}}:{{image_version}}
+ExecStop = -/usr/bin/docker stop %n
+ExecStopPost = -/usr/bin/docker rm -f %n
+Restart = always
+RestartSec = 60s
+TimeoutSec = 60
