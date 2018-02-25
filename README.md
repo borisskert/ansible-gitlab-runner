@@ -1,5 +1,5 @@
-install-docker-gitlab-runner
-============================
+ansible-gitlab-runner
+=====================
 
 Installs gitlab-runner as docker container.
 
