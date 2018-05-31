@@ -3,8 +3,9 @@ WantedBy = multi-user.target
 
 [Unit]
 Description = gitlab-runner service
-Type = simple
-Requires = gitlab.service
+Type        = simple
+Requires    = gitlab.service
+After       = gitlab.service
 
 [Service]
 ExecStartPre = -/usr/bin/docker rm -f %n &&
