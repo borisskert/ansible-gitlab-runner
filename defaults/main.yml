@@ -11,3 +11,4 @@ registration_token: ''
 
 # used for multiple runners on one machine
 runner_name: ''
+description: Docker_Runner
