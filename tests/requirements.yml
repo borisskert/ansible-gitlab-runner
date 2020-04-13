@@ -1,0 +1,8 @@
+---
+- name: install-docker
+  src: https://github.com/borisskert/ansible-docker.git
+  scm: git
+
+- name: install-gitlab
+  src: git@github.com:borisskert/ansible-gitlab.git
+  scm: git

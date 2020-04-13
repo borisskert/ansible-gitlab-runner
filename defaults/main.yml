@@ -1,5 +1,5 @@
 image_name: gitlab/gitlab-runner
-image_version: alpine-v9.5.0
+image_version: alpine-v12.9.0
 
 config_volume: ''
 config_file_path: '{{config_volume}}/config.toml'

@@ -23,7 +23,7 @@ Role parameters
 | Variable      | Type | Mandatory? | Default | Description           |
 |---------------|------|------------|---------|-----------------------|
 | image_name    | text | no         | gitlab/gitlab-runner | Docker image name    |
-| image_version | text | no         | alpine-v9.5.0        | Docker image version |
+| image_version | text | no         | alpine-v12.9.0       | Docker image version |
 | config_volume | text | no         | <empty>              | Path to config volume |
 | gitlab_uri    | url  | no         | <empty>              | Url to gitlab instance (needed for registration) |
 | registration_token | text  | no   | <empty>              | Registration token (needed for registration, provided by gitlab) |
