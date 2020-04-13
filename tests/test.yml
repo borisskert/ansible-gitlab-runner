@@ -35,5 +35,12 @@
     - role: ansible-gitlab-runner
       image_version: alpine-v12.9.0
       gitlab_uri: http://192.168.33.72
-      registration_token: X_xyNGwe3Knvxz657LoE
+      registration_token: YydxtxYTUFgYsWxavDvv
       config_volume: /srv/docker/gitlab-runner
+
+    - role: ansible-gitlab-runner
+      image_version: alpine-v12.9.0
+      gitlab_uri: http://192.168.33.72
+      registration_token: YydxtxYTUFgYsWxavDvv
+      runner_name: my-other-runner
+      config_volume: /srv/docker/gitlab-runner-my-other

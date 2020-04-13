@@ -28,6 +28,7 @@ Role parameters
 | gitlab_uri    | url  | no         | <empty>              | Url to gitlab instance (needed for registration) |
 | registration_token | text  | no   | <empty>              | Registration token (needed for registration, provided by gitlab) |
 | force_registration | boolean | no | False                | Force registration                                               |
+| runner_name        | text    | no | <empty>              | Runner name for multiple instances on one machine                |
 
 
 Example Playbook

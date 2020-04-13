@@ -8,3 +8,6 @@ gitlab_uri: ''
 
 force_registration: False
 registration_token: ''
+
+# used for multiple runners on one machine
+runner_name: ''
