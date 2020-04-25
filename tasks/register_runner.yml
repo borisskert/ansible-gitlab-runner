@@ -10,14 +10,7 @@
     state: directory
     owner: root
     group: root
-    mode: '0775'
-  when: not(
-            (config_volume is undefined)
-            or
-            (config_volume is none)
-            or
-            (config_volume | trim == '')
-          )
+    mode: 0775
 
 - name: register runner
   command: "docker run --rm --name ansbible__gitlab_runner_register --volume {{config_volume}}:/etc/gitlab-runner --volume /var/run/docker.sock:/var/run/docker.sock -e RUNNER_EXECUTOR=docker -e DOCKER_IMAGE=docker:latest {{image_name}}:{{image_version}} register -n --url {{gitlab_uri}} --registration-token {{registration_token}} --docker-volumes /var/run/docker.sock:/var/run/docker.sock --description {{description}}"

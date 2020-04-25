@@ -1,0 +1,21 @@
+---
+- name: Check 'config_volume' parameter
+  assert:
+    that:
+      - "config_volume is defined"
+      - "config_volume | length > 0"
+    fail_msg: "parameter 'config_volume' is missing"
+
+- name: Check 'gitlab_uri' parameter
+  assert:
+    that:
+      - "gitlab_uri is defined"
+      - "gitlab_uri | length > 0"
+    fail_msg: "parameter 'gitlab_uri' is missing"
+
+- name: Check 'registration_token' parameter
+  assert:
+    that:
+      - "registration_token is defined"
+      - "registration_token | length > 0"
+    fail_msg: "parameter 'registration_token' is missing"

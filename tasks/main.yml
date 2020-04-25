@@ -1,4 +1,6 @@
 ---
+- include: check-parameters.yml
+
 - name: pull image
   docker_image:
     name: "{{image_name}}:{{image_version}}"
@@ -10,21 +12,9 @@
   register: config_file
 
 - include: register_runner.yml
-  when: (config_file.stat.exists == False or force_registration == True) and
-   not(
-     (gitlab_uri is undefined)
-     or
-     (gitlab_uri is none)
-     or
-     (gitlab_uri | trim == '')
-   ) and
-   not(
-     (registration_token is undefined)
-     or
-     (registration_token is none)
-     or
-     (registration_token | trim == '')
-   )
+  when: (config_file.stat.exists | bool == False
+    or force_registration | bool)
+    and (disable_registration | bool == False)
 
 - name: Setup systemd service name
   set_fact:
@@ -36,7 +26,7 @@
     dest: "/etc/systemd/system/{{runner_service_name}}.service"
     owner: root
     group: root
-    mode: '0644'
+    mode: 0644
   register: gitlab_runner_service
 
 - name: Reload systemd
@@ -48,9 +38,12 @@
     name: "{{runner_service_name}}"
     state: restarted
     enabled: yes
-  when: gitlab_runner_service.changed or runner_register is defined and runner_register.changed
+  when: gitlab_runner_service.changed
+    or runner_register is defined
+    and runner_register.changed
 
 - name: Start service if not running
   service:
     name: "{{runner_service_name}}"
     state: started
+    enabled: yes

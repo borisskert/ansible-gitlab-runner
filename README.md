@@ -1,52 +1,53 @@
-ansible-gitlab-runner
-=====================
+# ansible-gitlab-runner
 
-Installs gitlab-runner as docker container.
+Installs gitlab-runner as docker container managed by systemd.
 
-Requirements
-------------
+## Requirements
 
 * Docker
 * Systemd
 
-Tasks
------
+## Tasks
 
 * Create volume paths for docker container
 * Setup systemd unit file
 * Register runner to gitlab if specified
 * Start/Restart gitlab-runner service
 
-Role parameters
---------------
+## Role parameters
 
 | Variable      | Type | Mandatory? | Default | Description           |
 |---------------|------|------------|---------|-----------------------|
 | image_name    | text | no         | gitlab/gitlab-runner | Docker image name    |
 | image_version | text | no         | alpine-v12.9.0       | Docker image version |
-| config_volume | text | no         | <empty>              | Path to config volume |
-| gitlab_uri    | url  | no         | <empty>              | Url to gitlab instance (needed for registration) |
-| registration_token | text  | no   | <empty>              | Registration token (needed for registration, provided by gitlab) |
-| force_registration | boolean | no | False                | Force registration                                               |
-| runner_name        | text    | no | <empty>              | Runner name for multiple instances on one machine                |
-| description        | text    | no | 'Docker_Runner'      | Runner description displayed in your Gitlab instance             |
+| config_volume | text | yes        | <empty>              | Path to config volume |
+| gitlab_uri    | url  | yes        | <empty>              | Url to gitlab instance (needed for registration) |
+| registration_token | text  | yes  | <empty>              | Registration token (needed for registration, provided by gitlab) |
+| force_registration | boolean | no | False                | Delete the old registration config and re-register to Gitlab instance |
+| disable_registration | boolean | no | False                | Disable registration (for testing purposes) |
+| runner_name          | text    | no | <empty>              | Runner name for multiple instances on one machine                |
+| description          | text    | no | 'Docker_Runner'      | Runner description displayed in your Gitlab instance             |
 
 
-Example Playbook
-----------------
+## Usage
 
-Usage (without parameters):
+### Add to `requirements.yml`:
 
+```yaml
+- name: install-gitlab-runner
+  src: https://github.com/borisskert/ansible-gitlab-runner.git
+  scm: git
+```
+
+### Typical playbook:
+
+```yaml
     - hosts: servers
-      roles:
-         - { role: install-docker-gitlab }
-
-Usage (with parameters):
-
-    - hosts: servers
-      roles:
-      - role: install-docker-gitlab
-        gitlab_uri: 'http://192.168.56.101'
-        force_registration: False
-        registration_token: 'XXX'
-        config_volume: /srv/docker/gitlab-runner
+    - role: install-gitlab-runner
+      image_version: alpine-v12.9.0
+      gitlab_uri: https://my.gitserver.org/
+      registration_token: mYReGIstR4TI0NtOK3n
+      runner_name: my-custom-runner-name
+      description: My runner description
+      config_volume: /srv/gitlab-runner
+```
