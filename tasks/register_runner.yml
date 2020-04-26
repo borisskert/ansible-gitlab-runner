@@ -3,6 +3,7 @@
   file:
     path: "{{config_file_path}}"
     state: absent
+  when: refresh_register | bool
 
 - name: create config directory
   file:
@@ -12,6 +13,12 @@
     group: root
     mode: 0775
 
+- name: Gathering config file existence
+  stat:
+    path: "{{config_file_path}}"
+  register: config_file
+
 - name: register runner
   command: "docker run --rm --name ansbible__gitlab_runner_register --volume {{config_volume}}:/etc/gitlab-runner --volume /var/run/docker.sock:/var/run/docker.sock -e RUNNER_EXECUTOR=docker -e DOCKER_IMAGE=docker:latest {{image_name}}:{{image_version}} register -n --url {{gitlab_uri}} --registration-token {{registration_token}} --docker-volumes /var/run/docker.sock:/var/run/docker.sock --description {{description}}"
   register: runner_register
+  when: config_file.stat.exists | bool == False

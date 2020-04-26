@@ -6,15 +6,8 @@
     name: "{{image_name}}:{{image_version}}"
     source: pull
 
-- name: Gathering config file existence
-  stat:
-    path: "{{config_file_path}}"
-  register: config_file
-
 - include: register_runner.yml
-  when: (config_file.stat.exists | bool == False
-    or force_registration | bool)
-    and (disable_registration | bool == False)
+  when: disable_register | bool == False
 
 - name: Setup systemd service name
   set_fact:
@@ -42,7 +35,7 @@
     or runner_register is defined
     and runner_register.changed
 
-- name: Start service if not running
+- name: Start service (if not running)
   service:
     name: "{{runner_service_name}}"
     state: started

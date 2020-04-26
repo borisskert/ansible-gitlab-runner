@@ -23,8 +23,8 @@ Installs gitlab-runner as docker container managed by systemd.
 | config_volume | text | yes        | <empty>              | Path to config volume |
 | gitlab_uri    | url  | yes        | <empty>              | Url to gitlab instance (needed for registration) |
 | registration_token | text  | yes  | <empty>              | Registration token (needed for registration, provided by gitlab) |
-| force_registration | boolean | no | False                | Delete the old registration config and re-register to Gitlab instance |
-| disable_registration | boolean | no | False                | Disable registration (for testing purposes) |
+| refresh_register   | boolean | no | False                | Delete the old registration config and re-register to Gitlab instance |
+| disable_register   | boolean | no | False                | Disable registration (for testing purposes) |
 | runner_name          | text    | no | <empty>              | Runner name for multiple instances on one machine                |
 | description          | text    | no | 'Docker_Runner'      | Runner description displayed in your Gitlab instance             |
 
@@ -50,4 +50,6 @@ Installs gitlab-runner as docker container managed by systemd.
       runner_name: my-custom-runner-name
       description: My runner description
       config_volume: /srv/gitlab-runner
+      disable_register: no
+      refresh_register: no
 ```

@@ -6,8 +6,9 @@ config_file_path: '{{config_volume}}/config.toml'
 
 gitlab_uri: ''
 
-disable_registration: False
-force_registration: False
+disable_register: False
+refresh_register: False
+
 registration_token: ''
 
 # used for multiple runners on one machine

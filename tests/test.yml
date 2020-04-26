@@ -38,7 +38,8 @@
       registration_token: YydxtxYTUFgYsWxavDvv
       description: my-runner
       config_volume: /srv/docker/gitlab-runner
-      disable_registration: yes
+      disable_register: yes
+      refresh_register: no
 
     - role: ansible-gitlab-runner
       image_version: alpine-v12.9.0
@@ -47,4 +48,5 @@
       runner_name: my-other-runner
       description: my-other-runner
       config_volume: /srv/docker/gitlab-runner-my-other
-      disable_registration: yes
+      disable_register: yes
+      refresh_register: no
