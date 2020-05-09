@@ -5,6 +5,11 @@ vagrant up --provision
 
 ansible-galaxy install -r requirements.yml -p ./roles --force
 
+echo "Waiting for answer on port 22..."
+while ! timeout 1 nc -z 192.168.33.72 22; do
+  sleep 0.2
+done
+
 ansible-playbook -i inventory.ini test.yml --extra-vars "force_cert_creation=false"
 
 ansible-playbook -i inventory.ini test.yml --extra-vars "force_cert_creation=false" \
@@ -12,4 +17,4 @@ ansible-playbook -i inventory.ini test.yml --extra-vars "force_cert_creation=fal
   && (echo 'Idempotence test: pass' && exit 0) \
   || (echo 'Idempotence test: fail' && exit 1)
 
-vagrant destroy -f
+vagrant destroy

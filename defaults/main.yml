@@ -1,3 +1,4 @@
+---
 image_name: gitlab/gitlab-runner
 image_version: alpine-v12.9.0
 
@@ -6,8 +7,8 @@ config_file_path: '{{config_volume}}/config.toml'
 
 gitlab_uri: ''
 
-disable_register: False
-refresh_register: False
+disable_register: false
+refresh_register: false
 
 registration_token: ''
 
