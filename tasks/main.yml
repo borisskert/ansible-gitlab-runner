@@ -39,6 +39,10 @@
   register: runner_service_state
   changed_when: runner_service_state.status.SubState != 'running'
   notify: Start gitlab-runner service
+  when: not (
+    molecule_docker_environment is defined
+    and molecule_docker_environment | bool
+    )
 
-- name: Flush handlers
+- name: Reload systemd and restart service if necessary
   meta: flush_handlers

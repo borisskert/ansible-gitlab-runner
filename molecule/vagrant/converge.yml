@@ -1,0 +1,14 @@
+---
+- name: Converge
+  hosts: all
+  become: true
+
+  roles:
+    - role: ansible-gitlab-runner
+      image_version: alpine-v12.9.0
+      gitlab_uri: http://my.gitlab.server.org
+      registration_token: YydxtxYTUFgYsWxavDvv
+      description: my-runner
+      config_volume: /srv/gitlab-runner
+      disable_register: true
+      refresh_register: false

@@ -2,6 +2,18 @@
 
 Installs gitlab-runner as docker container managed by systemd.
 
+## Supported systems
+
+* Ubuntu:
+  * 16.04 (xenial)
+  * 18.04 (bionic)
+  * 20.04 (focal - installing `docker.io` package)
+* Debian
+  * 9 (stretch)
+  * 10 (buster)
+
+It's possible other systems are working, but they are not tested.
+
 ## Requirements
 
 * Docker
@@ -52,4 +64,29 @@ Installs gitlab-runner as docker container managed by systemd.
       config_volume: /srv/gitlab-runner
       disable_register: no
       refresh_register: no
+```
+
+## Testing
+
+Requirements:
+
+* [Vagrant](https://www.vagrantup.com/)
+* [VirtualBox](https://www.virtualbox.org/)
+* [Ansible](https://docs.ansible.com/)
+* [Molecule](https://molecule.readthedocs.io/en/latest/index.html)
+* [yamllint](https://yamllint.readthedocs.io/en/stable/#)
+* [ansible-lint](https://docs.ansible.com/ansible-lint/)
+* [Docker](https://docs.docker.com/)
+
+### Run within docker
+
+```shell script
+molecule test --scenario-name ubuntu
+molecule test --scenario-name debian
+```
+
+### Run within Vagrant
+
+```shell script
+ molecule test --scenario-name vagrant --parallel
 ```

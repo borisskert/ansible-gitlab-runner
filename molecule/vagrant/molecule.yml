@@ -1,0 +1,34 @@
+---
+dependency:
+  name: galaxy
+  options:
+    role-file: ./molecule/shared/common/requirements.yml
+
+driver:
+  name: vagrant
+  provider:
+    name: virtualbox
+
+platforms:
+  - name: ansible-gitlab-runner-xenial
+    box: ubuntu/xenial64
+  - name: ansible-gitlab-runner-bionic
+    box: ubuntu/bionic64
+  - name: ansible-gitlab-runner-focal
+    box: ubuntu/focal64
+  - name: ansible-gitlab-runner-stretch
+    box: debian/stretch64
+  - name: ansible-gitlab-runner-buster
+    box: debian/buster64
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      ansible-gitlab-runner-stretch:
+        ansible_python_interpreter: /usr/bin/python3
+      ansible-gitlab-runner-buster:
+        ansible_python_interpreter: /usr/bin/python3
+
+verifier:
+  name: ansible

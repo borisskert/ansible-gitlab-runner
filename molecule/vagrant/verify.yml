@@ -1,0 +1,19 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+
+  tasks:
+    - name: Should have pulled image
+      docker_image:
+        name: gitlab/gitlab-runner:alpine-v12.9.0
+        source: pull
+      register: docker_image
+      failed_when: docker_image.changed
+
+    - name: Should have created volume
+      file:
+        path: /srv/gitlab-runner
+        state: directory
+      register: volume
+      failed_when: volume.changed
