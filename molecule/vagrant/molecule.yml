@@ -2,7 +2,7 @@
 dependency:
   name: galaxy
   options:
-    role-file: ./molecule/shared/common/requirements.yml
+    role-file: ./molecule/shared/requirements.yml
 
 driver:
   name: vagrant
@@ -18,16 +18,21 @@ platforms:
     box: ubuntu/focal64
   - name: ansible-gitlab-runner-stretch
     box: debian/stretch64
+    groups:
+      - debian
   - name: ansible-gitlab-runner-buster
     box: debian/buster64
+    groups:
+      - debian
 
 provisioner:
   name: ansible
+  playbooks:
+    prepare: ../shared/prepare.yml
+    converge: ../shared/converge.yml
   inventory:
-    host_vars:
-      ansible-gitlab-runner-stretch:
-        ansible_python_interpreter: /usr/bin/python3
-      ansible-gitlab-runner-buster:
+    group_vars:
+      debian:
         ansible_python_interpreter: /usr/bin/python3
 
 verifier:

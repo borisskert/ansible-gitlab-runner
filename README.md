@@ -81,8 +81,7 @@ Requirements:
 ### Run within docker
 
 ```shell script
-molecule test --scenario-name ubuntu
-molecule test --scenario-name debian
+molecule test
 ```
 
 ### Run within Vagrant

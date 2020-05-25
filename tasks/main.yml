@@ -5,6 +5,7 @@
   docker_image:
     name: "{{ image_name }}:{{ image_version }}"
     source: pull
+  notify: Restart gitlab-runner service
 
 - include: register_runner.yml
   when: not (disable_register | bool)
@@ -29,20 +30,17 @@
     group: root
     mode: 0644
   notify:
-    - Reload systemd
     - Restart gitlab-runner service
 
-- name: Enable service
+- name: Reload gitlab-runner service if necessary
+  meta: flush_handlers
+
+- name: Enable gitlab-runner service
   service:
     name: "{{ runner_service_name }}"
     enabled: true
-  register: runner_service_state
-  changed_when: runner_service_state.status.SubState != 'running'
-  notify: Start gitlab-runner service
+    state: started
   when: not (
     molecule_docker_environment is defined
     and molecule_docker_environment | bool
     )
-
-- name: Reload systemd and restart service if necessary
-  meta: flush_handlers
