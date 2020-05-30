@@ -1,13 +1,13 @@
 ---
 - name: Delete config file
   file:
-    path: "{{ config_file_path }}"
+    path: "{{ gitlab_runner_config_file_path }}"
     state: absent
-  when: refresh_register | default(false) | bool
+  when: gitlab_runner_refresh_register | default(false) | bool
 
 - name: create config directory
   file:
-    path: "{{ config_volume }}"
+    path: "{{ gitlab_runner_config_volume }}"
     state: directory
     owner: root
     group: root
@@ -15,22 +15,22 @@
 
 - name: Gathering config file existence
   stat:
-    path: "{{ config_file_path }}"
+    path: "{{ gitlab_runner_config_file_path }}"
   register: config_file
 
 - name: register runner
   command: |
     docker run --rm \
-               --name ansbible__gitlab_runner_register \
-               --volume {{ config_volume }}:/etc/gitlab-runner \
-               --volume /var/run/docker.sock:/var/run/docker.sock \
-               -e RUNNER_EXECUTOR=docker \
-               -e DOCKER_IMAGE=docker:latest \
-               {{ image_name }}:{{ image_version }} \
-               register -n \
-                 --url {{ gitlab_uri }} \
-                 --registration-token {{ registration_token }} \
-                 --docker-volumes /var/run/docker.sock:/var/run/docker.sock \
-                 --description {{ description }}
+      --name ansbible__gitlab_runner_register \
+      --volume {{ gitlab_runner_config_volume }}:/etc/gitlab-runner \
+      --volume /var/run/docker.sock:/var/run/docker.sock \
+      -e RUNNER_EXECUTOR=docker \
+      -e DOCKER_IMAGE=docker:latest \
+      {{ gitlab_runner_image_name }}:{{ gitlab_runner_image_version }} \
+      register -n \
+        --url {{ gitlab_runner_gitlab_uri }} \
+        --registration-token {{ gitlab_runner_registration_token }} \
+        --docker-volumes /var/run/docker.sock:/var/run/docker.sock \
+        --description {{ gitlab_runner_description }}
   when: not (config_file.stat.exists | bool)
   notify: Restart gitlab-runner service

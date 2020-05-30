@@ -8,11 +8,11 @@ Description = gitlab-runner service
 ExecStartPre = -/usr/bin/docker rm -f %n
 
 ExecStart = /usr/bin/docker run --name %n \
-{% if config_volume != "" %}
-            --volume {{config_volume}}:/etc/gitlab-runner \
+{% if gitlab_runner_config_volume is defined and gitlab_runner_config_volume | length > 0 %}
+            --volume {{ gitlab_runner_config_volume }}:/etc/gitlab-runner \
 {% endif %}
             --volume /var/run/docker.sock:/var/run/docker.sock \
-            {{image_name}}:{{image_version}}
+            {{ gitlab_runner_image_name }}:{{ gitlab_runner_image_version }}
 
 ExecStop = -/usr/bin/docker stop %n
 ExecStopPost = -/usr/bin/docker rm -f %n

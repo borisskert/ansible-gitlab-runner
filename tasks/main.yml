@@ -3,24 +3,24 @@
 
 - name: pull image
   docker_image:
-    name: "{{ image_name }}:{{ image_version }}"
+    name: "{{ gitlab_runner_image_name }}:{{ gitlab_runner_image_version }}"
     source: pull
   notify: Restart gitlab-runner service
 
 - include: register_runner.yml
-  when: not (disable_register | bool)
+  when: not (gitlab_runner_disable_register | bool)
 
 - name: Setup systemd service name
   set_fact:
-    runner_service_name: "gitlab-runner-{{ runner_name }}"
-  when: runner_name is defined
-    and runner_name | length > 0
+    runner_service_name: "gitlab-runner-{{ gitlab_runner_runner_name }}"
+  when: gitlab_runner_runner_name is defined
+    and gitlab_runner_runner_name | length > 0
 
 - name: Setup systemd service name
   set_fact:
     runner_service_name: gitlab-runner
-  when: runner_name is not defined
-    or runner_name | length < 1
+  when: gitlab_runner_runner_name is not defined
+    or gitlab_runner_runner_name | length < 1
 
 - name: Create gitlab-runner systemd unit file
   template:

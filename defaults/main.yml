@@ -1,17 +1,17 @@
 ---
-image_name: gitlab/gitlab-runner
-image_version: alpine-v12.9.0
+gitlab_runner_image_name: gitlab/gitlab-runner
+gitlab_runner_image_version: alpine
 
-config_volume: ''
-config_file_path: '{{config_volume}}/config.toml'
+gitlab_runner_config_volume: ''
+gitlab_runner_config_file_path: '{{gitlab_runner_config_volume}}/config.toml'
 
-gitlab_uri: ''
+gitlab_runner_gitlab_uri: ''
 
-disable_register: false
-refresh_register: false
+gitlab_runner_disable_register: false
+gitlab_runner_refresh_register: false
 
-registration_token: ''
+gitlab_runner_registration_token: ''
 
 # used for multiple runners on one machine
-runner_name: ''
-description: Docker_Runner
+gitlab_runner_runner_name: ''
+gitlab_runner_description: Docker_Runner

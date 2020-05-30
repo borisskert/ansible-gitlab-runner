@@ -1,21 +1,21 @@
 ---
-- name: Check 'config_volume' parameter
+- name: Check 'gitlab_runner_config_volume' parameter
   assert:
     that:
-      - "config_volume is defined"
-      - "config_volume | length > 0"
-    fail_msg: "parameter 'config_volume' is missing"
+      - "gitlab_runner_config_volume is defined"
+      - "gitlab_runner_config_volume | length > 0"
+    fail_msg: "parameter 'gitlab_runner_config_volume' is missing"
 
-- name: Check 'gitlab_uri' parameter
+- name: Check 'gitlab_runner_gitlab_uri' parameter
   assert:
     that:
-      - "gitlab_uri is defined"
-      - "gitlab_uri | length > 0"
-    fail_msg: "parameter 'gitlab_uri' is missing"
+      - "gitlab_runner_gitlab_uri is defined"
+      - "gitlab_runner_gitlab_uri | length > 0"
+    fail_msg: "parameter 'gitlab_runner_gitlab_uri' is missing"
 
-- name: Check 'registration_token' parameter
+- name: Check 'gitlab_runner_registration_token' parameter
   assert:
     that:
-      - "registration_token is defined"
-      - "registration_token | length > 0"
-    fail_msg: "parameter 'registration_token' is missing"
+      - "gitlab_runner_registration_token is defined"
+      - "gitlab_runner_registration_token | length > 0"
+    fail_msg: "parameter 'gitlab_runner_registration_token' is missing"

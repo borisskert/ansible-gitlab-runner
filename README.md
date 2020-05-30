@@ -30,15 +30,15 @@ It's possible other systems are working, but they are not tested.
 
 | Variable      | Type | Mandatory? | Default | Description           |
 |---------------|------|------------|---------|-----------------------|
-| image_name    | text | no         | gitlab/gitlab-runner | Docker image name    |
-| image_version | text | no         | alpine-v12.9.0       | Docker image version |
-| config_volume | text | yes        | <empty>              | Path to config volume |
-| gitlab_uri    | url  | yes        | <empty>              | Url to gitlab instance (needed for registration) |
-| registration_token | text  | yes  | <empty>              | Registration token (needed for registration, provided by gitlab) |
-| refresh_register   | boolean | no | False                | Delete the old registration config and re-register to Gitlab instance |
-| disable_register   | boolean | no | False                | Disable registration (for testing purposes) |
-| runner_name          | text    | no | <empty>              | Runner name for multiple instances on one machine                |
-| description          | text    | no | 'Docker_Runner'      | Runner description displayed in your Gitlab instance             |
+| gitlab_runner_image_name    | text | no         | gitlab/gitlab-runner | Docker image name    |
+| gitlab_runner_image_version | text | no         | alpine-v12.9.0       | Docker image version |
+| gitlab_runner_config_volume | text | yes        | <empty>              | Path to config volume |
+| gitlab_runner_gitlab_uri    | url  | yes        | <empty>              | Url to gitlab instance (needed for registration) |
+| gitlab_runner_registration_token | text  | yes  | <empty>              | Registration token (needed for registration, provided by gitlab) |
+| gitlab_runner_refresh_register   | boolean | no | False                | Delete the old registration config and re-register to Gitlab instance |
+| gitlab_runner_disable_register   | boolean | no | False                | Disable registration (for testing purposes) |
+| gitlab_runner_runner_name          | text    | no | <empty>              | Runner name for multiple instances on one machine                |
+| gitlab_runner_description          | text    | no | 'Docker_Runner'      | Runner description displayed in your Gitlab instance             |
 
 
 ## Usage
@@ -56,14 +56,14 @@ It's possible other systems are working, but they are not tested.
 ```yaml
     - hosts: servers
     - role: install-gitlab-runner
-      image_version: alpine-v12.9.0
-      gitlab_uri: https://my.gitserver.org/
-      registration_token: mYReGIstR4TI0NtOK3n
-      runner_name: my-custom-runner-name
-      description: My runner description
-      config_volume: /srv/gitlab-runner
-      disable_register: no
-      refresh_register: no
+      gitlab_runner_image_version: alpine-v12.9.0
+      gitlab_runner_gitlab_uri: https://my.gitserver.org/
+      gitlab_runner_registration_token: mYReGIstR4TI0NtOK3n
+      gitlab_runner_runner_name: my-custom-runner-name
+      gitlab_runner_description: My runner description
+      gitlab_runner_config_volume: /srv/gitlab-runner
+      gitlab_runner_disable_register: no
+      gitlab_runner_refresh_register: no
 ```
 
 ## Testing

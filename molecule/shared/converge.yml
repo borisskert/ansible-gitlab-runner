@@ -5,10 +5,10 @@
 
   roles:
     - role: ansible-gitlab-runner
-      image_version: alpine-v12.9.0
-      gitlab_uri: http://my.gitlab.server.org
-      registration_token: YydxtxYTUFgYsWxavDvv
-      description: my-runner
-      config_volume: /srv/gitlab-runner
-      disable_register: true
-      refresh_register: false
+      gitlab_runner_image_version: alpine-v12.9.0
+      gitlab_runner_gitlab_uri: http://my.gitlab.server.org
+      gitlab_runner_registration_token: YydxtxYTUFgYsWxavDvv
+      gitlab_runner_description: my-runner
+      gitlab_runner_config_volume: /srv/gitlab-runner
+      gitlab_runner_disable_register: true
+      gitlab_runner_refresh_register: false
