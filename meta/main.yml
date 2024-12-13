@@ -1,5 +1,7 @@
 ---
 galaxy_info:
+  role_name: gitlab_runner
+  namespace: borisskert
   author: borisskert
   description: Installation role for gitlab-runner docker container
   min_ansible_version: 2.9

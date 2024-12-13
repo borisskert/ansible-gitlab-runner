@@ -1,13 +1,7 @@
 ---
-- include: check-parameters.yml
+- include_tasks: check-parameters.yml
 
-- name: pull image
-  docker_image:
-    name: "{{ gitlab_runner_image_name }}:{{ gitlab_runner_image_version }}"
-    source: pull
-  notify: Restart gitlab-runner service
-
-- include: register_runner.yml
+- include_tasks: register_runner.yml
   when: not (gitlab_runner_disable_register | bool)
 
 - name: Setup systemd service name
